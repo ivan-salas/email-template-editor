@@ -3,27 +3,102 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Editor WYSIWYG con TinyMCE</title>
+  <title>Editor HTML Interactivo (TinyMCE)</title>
   
+  <!-- (1) Cargar Google Fonts (ej: Inter) para mejorar la tipografía -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
   <!-- Cargar Bootstrap 5 desde CDN -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 
   <!-- Cargar TinyMCE desde CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/tinymce@6/tinymce.min.js" referrerpolicy="origin"></script>
-</head>
-<body class="container my-4">
-  <h1 class="mb-3">Editor HTML Interactivo (TinyMCE)</h1>
-  <p>Presiona <strong>"Cargar HTML Base"</strong> para cargar el template desde un archivo externo. Luego edítalo y presiona <strong>"Copiar HTML Actual"</strong>.</p>
+  <script 
+    src="https://cdn.jsdelivr.net/npm/tinymce@6/tinymce.min.js" 
+    referrerpolicy="origin">
+  </script>
 
-  <div class="mb-3">
-    <button class="btn btn-success" onclick="copiarHTML()">Copiar HTML Actual</button>
+  <style>
+    /* (3) Ajustar tipografías y espaciados adicionales al body */
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-light"> <!-- Fondo ligeramente gris para contraste -->
+
+  <!-- (1) Navbar simple -->
+  <nav class="navbar navbar-light bg-white shadow-sm mb-4">
+    <div class="container-fluid">
+      <a class="navbar-brand fw-semibold" href="#">Mi Editor de Plantillas</a>
+    </div>
+  </nav>
+
+  <div class="container my-5 py-3">
+    <h1 class="mb-3 text-primary">Editor HTML Interactivo (TinyMCE)</h1>
+    <p>
+      Presiona <strong>"Cargar HTML Base"</strong> para cargar el template desde un archivo externo (se carga automáticamente). 
+      Luego edítalo y presiona <strong>"Copiar HTML Actual"</strong> para guardarlo en el portapapeles.
+    </p>
+
+    <!-- (5) Card para enmarcar el editor -->
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title">Plantilla de Correo
+          <!-- (7) Badge indicando el estado -->
+          <span class="badge bg-info ms-2">Plantilla cargada</span>
+        </h5>
+        <p class="card-text">Aquí puedes visualizar y editar la plantilla HTML.</p>
+        <!-- (2) Ajustar el textarea dentro del card -->
+        <textarea id="editor"></textarea>
+      </div>
+      <div class="card-footer d-flex justify-content-end">
+        <!-- (4) Botón para copiar el HTML actual -->
+        <button class="btn btn-success" onclick="copiarHTML()">Copiar HTML Actual</button>
+      </div>
+    </div>
+
+    <!-- (6) Toast para feedback del copiado -->
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+      <div id="copyToast" class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+          <div class="toast-body">
+            ¡Contenido copiado con éxito!
+          </div>
+          <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <textarea id="editor"></textarea>
-
   <!-- Tu script personalizado -->
-  <script src="script.js"></script>
+  <script>
+    // Inicializar TinyMCE con content_style (6)
+    tinymce.init({
+      selector: '#editor',
+      height: 600,
+      menubar: false,
+      plugins: 'link image code table lists',
+      toolbar: 'undo redo | styleselect | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | code',
+      content_style: 'body { font-family: Inter, sans-serif; font-size: 16px; line-height:1.5; }' 
+    });
+
+    function copiarHTML() {
+      var htmlActual = tinymce.get('editor').getContent();
+      navigator.clipboard.writeText(htmlActual).then(function() {
+        // Mostrar toast
+        var toastEl = document.getElementById('copyToast');
+        var toast = new bootstrap.Toast(toastEl);
+        toast.show();
+      }, function() {
+        alert('Error al copiar el HTML.');
+      });
+    }
+  </script>
+
   <!-- JavaScript de Bootstrap -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+  
 </body>
 </html>
