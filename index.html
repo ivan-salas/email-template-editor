@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Editor WYSIWYG</title>
+  <!-- Cargamos CKEditor 4 (edición standard) desde un CDN -->
+  <script src="https://cdn.ckeditor.com/4.20.1/standard/ckeditor.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    #editor {
+      width: 100%;
+      min-height: 300px;
+    }
+    button {
+      margin-right: 10px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Editor HTML Interactivo</h1>
+  <p>Presiona "Cargar HTML Base" para cargar el template, edítalo y luego "Copiar HTML Actual" para copiar el resultado.</p>
+
+  <div>
+    <button onclick="cargarHTMLBase()">Cargar HTML Base</button>
+    <button onclick="copiarHTML()">Copiar HTML Actual</button>
+  </div>
+
+  <br>
+  <textarea name="editor" id="editor"></textarea>
+
+  <script>
+    // Inserta aquí tu HTML base:
+    var htmlBase = `<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!doctype html>
+<html xmlns:fb="http://www.facebook.com/2008/fbml" xmlns:og="http://opengraph.org/schema/"> 
+<head>
+<meta property="og:title" content="Principales hallazgos del ENVIS 2024, una hoja de ruta para Chile 💬">
+<meta property="fb:page_id" content="43929265776">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="referrer" content="origin">
+<!-- NAME: SELL PRODUCTS -->
+<!--[if gte mso 15]>
+<xml>
+    <o:OfficeDocumentSettings>
+    <o:AllowPNG/>
+    <o:PixelsPerInch>96</o:PixelsPerInch>
+    </o:OfficeDocumentSettings>
+</xml>
+<![endif]-->
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Principales hallazgos del ENVIS 2024, una hoja de ruta para Chile 💬</title>
+<style type="text/css">
+/* ESTILOS OMITIDOS POR BREVIDAD */
+/* Aquí iría todo el CSS del contenido que compartiste */
+</style>
+<!-- Más contenido aquí -->
+<body style="height: 100%;margin: 0;padding: 0;width: 100%;">
+<!-- El resto de tu contenido HTML original aquí -->
+<!-- ... -->
+</body>
+</html>`;
+
+    // Inicializar CKEditor
+    CKEDITOR.replace('editor');
+
+    function cargarHTMLBase() {
+      CKEDITOR.instances.editor.setData(htmlBase);
+    }
+
+    function copiarHTML() {
+      var htmlActual = CKEDITOR.instances.editor.getData();
+      navigator.clipboard.writeText(htmlActual).then(function() {
+        alert('HTML copiado al portapapeles.');
+      }, function() {
+        alert('Error al copiar el HTML.');
+      });
+    }
+  </script>
+</body>
+</html>
