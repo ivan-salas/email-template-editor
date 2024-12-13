@@ -72,33 +72,11 @@
     </div>
   </div>
 
-  <!-- Tu script personalizado -->
-  <script>
-    // Inicializar TinyMCE con content_style (6)
-    tinymce.init({
-      selector: '#editor',
-      height: 600,
-      menubar: false,
-      plugins: 'link image code table lists',
-      toolbar: 'undo redo | styleselect | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | code',
-      content_style: 'body { font-family: Inter, sans-serif; font-size: 16px; line-height:1.5; }' 
-    });
-
-    function copiarHTML() {
-      var htmlActual = tinymce.get('editor').getContent();
-      navigator.clipboard.writeText(htmlActual).then(function() {
-        // Mostrar toast
-        var toastEl = document.getElementById('copyToast');
-        var toast = new bootstrap.Toast(toastEl);
-        toast.show();
-      }, function() {
-        alert('Error al copiar el HTML.');
-      });
-    }
-  </script>
+  <!-- Tu script personalizado desde script.js-->
+    <script src="script.js"></script>
 
   <!-- JavaScript de Bootstrap -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-  
+
 </body>
 </html>

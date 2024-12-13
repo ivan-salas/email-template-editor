@@ -7,6 +7,7 @@ tinymce.init({
   menubar: false,
   plugins: 'link image code table lists',
   toolbar: 'undo redo | styleselect | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | code',
+  content_style: 'body { font-family: Inter, sans-serif; font-size: 16px; line-height:1.5; }',
   setup: function(editor) {
     editor.on('init', function() {
       console.log('Editor inicializado, iniciando carga del template...');
