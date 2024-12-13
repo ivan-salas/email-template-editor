@@ -38,10 +38,13 @@ tinymce.init({
 });
 
 function copiarHTML() {
-  var htmlActual = tinymce.get('editor').getContent();
-  navigator.clipboard.writeText(htmlActual).then(function() {
-    alert('HTML copiado al portapapeles.');
-  }, function() {
-    alert('Error al copiar el HTML.');
-  });
-}
+    var htmlActual = tinymce.get('editor').getContent();
+    navigator.clipboard.writeText(htmlActual).then(function() {
+      // Mostrar toast
+      var toastEl = document.getElementById('copyToast');
+      var toast = new bootstrap.Toast(toastEl);
+      toast.show();
+    }, function() {
+      alert('Error al copiar el HTML.');
+    });
+  }
