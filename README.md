@@ -1,2 +1,2 @@
 # email-template-editor
-Editor de un template de email para exportarlo como html.
+Editor de un template de email para exportarlo como html. La idea es que el usuario pueda editar un template de email y luego exportarlo como html para poder usarlo en su proyecto.
