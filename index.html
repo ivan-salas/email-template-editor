@@ -1,81 +1,1037 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Editor WYSIWYG</title>
-  <!-- Cargamos CKEditor 4 (edición standard) desde un CDN -->
-  <script src="https://cdn.ckeditor.com/4.20.1/standard/ckeditor.js"></script>
+  <title>Editor WYSIWYG con TinyMCE</title>
+  <!-- Cargar TinyMCE desde CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/tinymce@6/tinymce.min.js" referrerpolicy="origin"></script>
   <style>
     body {
       font-family: Arial, sans-serif;
       margin: 20px;
     }
     #editor {
-      width: 100%;
-      min-height: 300px;
+      margin-top: 20px;
     }
     button {
-      margin-right: 10px;
       margin-top: 10px;
+      margin-right: 10px;
     }
   </style>
 </head>
 <body>
-  <h1>Editor HTML Interactivo</h1>
-  <p>Presiona "Cargar HTML Base" para cargar el template, edítalo y luego "Copiar HTML Actual" para copiar el resultado.</p>
+  <h1>Editor HTML Interactivo (TinyMCE)</h1>
+  <p>Presiona "Cargar HTML Base" para cargar el template. Luego edítalo con las herramientas del editor y finalmente presiona "Copiar HTML Actual" para obtener el resultado.</p>
 
   <div>
     <button onclick="cargarHTMLBase()">Cargar HTML Base</button>
     <button onclick="copiarHTML()">Copiar HTML Actual</button>
   </div>
 
-  <br>
-  <textarea name="editor" id="editor"></textarea>
+  <textarea id="editor"></textarea>
 
   <script>
-    // Inserta aquí tu HTML base:
-    var htmlBase = `<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+    // Aquí colocas tu HTML base
+    var htmlBase = `
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <!doctype html>
-<html xmlns:fb="http://www.facebook.com/2008/fbml" xmlns:og="http://opengraph.org/schema/"> 
-<head>
+<html xmlns:fb="http://www.facebook.com/2008/fbml" xmlns:og="http://opengraph.org/schema/"> <head>
+        
 <meta property="og:title" content="Principales hallazgos del ENVIS 2024, una hoja de ruta para Chile 💬">
 <meta property="fb:page_id" content="43929265776">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="referrer" content="origin">
-<!-- NAME: SELL PRODUCTS -->
-<!--[if gte mso 15]>
-<xml>
-    <o:OfficeDocumentSettings>
-    <o:AllowPNG/>
-    <o:PixelsPerInch>96</o:PixelsPerInch>
-    </o:OfficeDocumentSettings>
-</xml>
-<![endif]-->
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Principales hallazgos del ENVIS 2024, una hoja de ruta para Chile 💬</title>
-<style type="text/css">
-/* ESTILOS OMITIDOS POR BREVIDAD */
-/* Aquí iría todo el CSS del contenido que compartiste */
-</style>
-<!-- Más contenido aquí -->
-<body style="height: 100%;margin: 0;padding: 0;width: 100%;">
-<!-- El resto de tu contenido HTML original aquí -->
-<!-- ... -->
-</body>
-</html>`;
+<meta name="referrer" content="origin">        
+        <!-- NAME: SELL PRODUCTS -->
+        <!--[if gte mso 15]>
+        <xml>
+            <o:OfficeDocumentSettings>
+            <o:AllowPNG/>
+            <o:PixelsPerInch>96</o:PixelsPerInch>
+            </o:OfficeDocumentSettings>
+        </xml>
+        <![endif]-->
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Principales hallazgos del ENVIS 2024, una hoja de ruta para Chile 💬</title>
+        
+    <style type="text/css">
+		p{
+			margin:10px 0;
+			padding:0;
+		}
+		table{
+			border-collapse:collapse;
+		}
+		h1,h2,h3,h4,h5,h6{
+			display:block;
+			margin:0;
+			padding:0;
+		}
+		img,a img{
+			border:0;
+			height:auto;
+			outline:none;
+			text-decoration:none;
+		}
+		body,#bodyTable,#bodyCell{
+			height:100%;
+			margin:0;
+			padding:0;
+			width:100%;
+		}
+		.mcnPreviewText{
+			display:none !important;
+		}
+		#outlook a{
+			padding:0;
+		}
+		img{
+			-ms-interpolation-mode:bicubic;
+		}
+		table{
+			mso-table-lspace:0pt;
+			mso-table-rspace:0pt;
+		}
+		.ReadMsgBody{
+			width:100%;
+		}
+		.ExternalClass{
+			width:100%;
+		}
+		p,a,li,td,blockquote{
+			mso-line-height-rule:exactly;
+		}
+		a[href^=tel],a[href^=sms]{
+			color:inherit;
+			cursor:default;
+			text-decoration:none;
+		}
+		p,a,li,td,body,table,blockquote{
+			-ms-text-size-adjust:100%;
+			-webkit-text-size-adjust:100%;
+		}
+		.ExternalClass,.ExternalClass p,.ExternalClass td,.ExternalClass div,.ExternalClass span,.ExternalClass font{
+			line-height:100%;
+		}
+		a[x-apple-data-detectors]{
+			color:inherit !important;
+			text-decoration:none !important;
+			font-size:inherit !important;
+			font-family:inherit !important;
+			font-weight:inherit !important;
+			line-height:inherit !important;
+		}
+		.templateContainer{
+			max-width:600px !important;
+		}
+		a.mcnButton{
+			display:block;
+		}
+		.mcnImage,.mcnRetinaImage{
+			vertical-align:bottom;
+		}
+		.mcnTextContent{
+			word-break:break-word;
+		}
+		.mcnTextContent img{
+			height:auto !important;
+		}
+		.mcnDividerBlock{
+			table-layout:fixed !important;
+		}
+		h1{
+			color:#222222;
+			font-family:Helvetica;
+			font-size:40px;
+			font-style:normal;
+			font-weight:bold;
+			line-height:150%;
+			letter-spacing:normal;
+			text-align:center;
+		}
+		h2{
+			color:#222222;
+			font-family:Helvetica;
+			font-size:34px;
+			font-style:normal;
+			font-weight:bold;
+			line-height:150%;
+			letter-spacing:normal;
+			text-align:left;
+		}
+		h3{
+			color:#444444;
+			font-family:Helvetica;
+			font-size:22px;
+			font-style:normal;
+			font-weight:bold;
+			line-height:150%;
+			letter-spacing:normal;
+			text-align:left;
+		}
+		h4{
+			color:#949494;
+			font-family:Georgia;
+			font-size:20px;
+			font-style:italic;
+			font-weight:normal;
+			line-height:125%;
+			letter-spacing:normal;
+			text-align:left;
+		}
+		#templateHeader{
+			background-color:#ffffff;
+			background-image:none;
+			background-repeat:no-repeat;
+			background-position:center;
+			background-size:cover;
+			border-top:0;
+			border-bottom:0;
+			padding-top:0px;
+			padding-bottom:0px;
+		}
+		.headerContainer{
+			background-color:transparent;
+			background-image:none;
+			background-repeat:no-repeat;
+			background-position:center;
+			background-size:cover;
+			border-top:0;
+			border-bottom:0;
+			padding-top:0;
+			padding-bottom:0;
+		}
+		.headerContainer .mcnTextContent,.headerContainer .mcnTextContent p{
+			color:#757575;
+			font-family:Helvetica;
+			font-size:16px;
+			line-height:150%;
+			text-align:left;
+		}
+		.headerContainer .mcnTextContent a,.headerContainer .mcnTextContent p a{
+			color:#007C89;
+			font-weight:normal;
+			text-decoration:underline;
+		}
+		#templateBody{
+			background-color:#FFFFFF;
+			background-image:none;
+			background-repeat:repeat;
+			background-position:50% 50%;
+			background-size:auto;
+			border-top:0;
+			border-bottom:0;
+			padding-top:0px;
+			padding-bottom:0px;
+		}
+		.bodyContainer{
+			background-color:transparent;
+			background-image:none;
+			background-repeat:no-repeat;
+			background-position:center;
+			background-size:cover;
+			border-top:0;
+			border-bottom:0;
+			padding-top:0;
+			padding-bottom:0;
+		}
+		.bodyContainer .mcnTextContent,.bodyContainer .mcnTextContent p{
+			color:#757575;
+			font-family:Helvetica;
+			font-size:16px;
+			line-height:150%;
+			text-align:left;
+		}
+		.bodyContainer .mcnTextContent a,.bodyContainer .mcnTextContent p a{
+			color:#007C89;
+			font-weight:normal;
+			text-decoration:underline;
+		}
+		#templateFooter{
+			background-color:#transparent;
+			background-image:none;
+			background-repeat:no-repeat;
+			background-position:center;
+			background-size:cover;
+			border-top:0;
+			border-bottom:0;
+			padding-top:0px;
+			padding-bottom:0px;
+		}
+		.footerContainer{
+			background-color:transparent;
+			background-image:none;
+			background-repeat:no-repeat;
+			background-position:center;
+			background-size:cover;
+			border-top:0;
+			border-bottom:0;
+			padding-top:0;
+			padding-bottom:0;
+		}
+		.footerContainer .mcnTextContent,.footerContainer .mcnTextContent p{
+			color:#FFFFFF;
+			font-family:Helvetica;
+			font-size:12px;
+			line-height:150%;
+			text-align:center;
+		}
+		.footerContainer .mcnTextContent a,.footerContainer .mcnTextContent p a{
+			color:#FFFFFF;
+			font-weight:normal;
+			text-decoration:underline;
+		}
+	@media only screen and (min-width:768px){
+		.templateContainer{
+			width:600px !important;
+		}
 
-    // Inicializar CKEditor
-    CKEDITOR.replace('editor');
+}	@media only screen and (max-width: 480px){
+		body,table,td,p,a,li,blockquote{
+			-webkit-text-size-adjust:none !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		body{
+			width:100% !important;
+			min-width:100% !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		.mcnRetinaImage{
+			max-width:100% !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		.mcnImage{
+			width:100% !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		.mcnCartContainer,.mcnCaptionTopContent,.mcnRecContentContainer,.mcnCaptionBottomContent,.mcnTextContentContainer,.mcnBoxedTextContentContainer,.mcnImageGroupContentContainer,.mcnCaptionLeftTextContentContainer,.mcnCaptionRightTextContentContainer,.mcnCaptionLeftImageContentContainer,.mcnCaptionRightImageContentContainer,.mcnImageCardLeftTextContentContainer,.mcnImageCardRightTextContentContainer,.mcnImageCardLeftImageContentContainer,.mcnImageCardRightImageContentContainer{
+			max-width:100% !important;
+			width:100% !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		.mcnBoxedTextContentContainer{
+			min-width:100% !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		.mcnImageGroupContent{
+			padding:9px !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		.mcnCaptionLeftContentOuter .mcnTextContent,.mcnCaptionRightContentOuter .mcnTextContent{
+			padding-top:9px !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		.mcnImageCardTopImageContent,.mcnCaptionBottomContent:last-child .mcnCaptionBottomImageContent,.mcnCaptionBlockInner .mcnCaptionTopContent:last-child .mcnTextContent{
+			padding-top:18px !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		.mcnImageCardBottomImageContent{
+			padding-bottom:9px !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		.mcnImageGroupBlockInner{
+			padding-top:0 !important;
+			padding-bottom:0 !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		.mcnImageGroupBlockOuter{
+			padding-top:9px !important;
+			padding-bottom:9px !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		.mcnTextContent,.mcnBoxedTextContentColumn{
+			padding-right:18px !important;
+			padding-left:18px !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		.mcnImageCardLeftImageContent,.mcnImageCardRightImageContent{
+			padding-right:18px !important;
+			padding-bottom:0 !important;
+			padding-left:18px !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		.mcpreview-image-uploader{
+			display:none !important;
+			width:100% !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		h1{
+			font-size:30px !important;
+			line-height:125% !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		h2{
+			font-size:26px !important;
+			line-height:125% !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		h3{
+			font-size:20px !important;
+			line-height:150% !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		h4{
+			font-size:18px !important;
+			line-height:150% !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		.mcnBoxedTextContentContainer .mcnTextContent,.mcnBoxedTextContentContainer .mcnTextContent p{
+			font-size:14px !important;
+			line-height:150% !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		.headerContainer .mcnTextContent,.headerContainer .mcnTextContent p{
+			font-size:16px !important;
+			line-height:150% !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		.bodyContainer .mcnTextContent,.bodyContainer .mcnTextContent p{
+			font-size:16px !important;
+			line-height:150% !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		.footerContainer .mcnTextContent,.footerContainer .mcnTextContent p{
+			font-size:14px !important;
+			line-height:150% !important;
+		}
+
+}</style><!--[if !mso]><!--><link href="https://fonts.googleapis.com/css?family=Lato:400,400i,700,700i" rel="stylesheet"><!--<![endif]-->                        
+                        <link rel="stylesheet" href="https://us15.campaign-archive.com/css/archivebar-desktop.css" mc:nocompile>  </head> <body id="archivebody"> <div id="awesomewrap"> <div id="awesomeshare"> <div id="zclipwrap"> <div class="copy-container"> <label for="clipboardSource">Campaign URL</label> <span id="copyURL"> <input id="clipboardSource" name="shorturl" style="margin-top:6px;" type="text" value="https://mailchi.mp/balloonlatam/envis2020-20217021" class="av-text"> <a id="copyToClipboard" href="javascript:;">Copy</a> </span> </div>  </div> <ul id="awesomesocial"> <li class="twt"> <div> <a title="Share on Twitter" target="_blank" href="https://twitter.com/share?url=https%3A%2F%2Fmailchi.mp%2Fballoonlatam%2Fenvis2020-20217021" rel="noopener noreferrer">Twitter <b>0 <i>tweets</i></b></a> </div>  </li> </ul> </div> <ul id="awesomebar"> <li> <a href="http://eepurl.com/gqpQ01" title="Subscribe to List" target="_blank" rel="noopener noreferrer">Subscribe</a> </li>  <li><a href="https://us15.campaign-archive.com/home/?u=fb62c89e22847741299664f39&amp;id=9c1872cac3" title="View Past Issues" target="_blank" rel="noopener noreferrer">Past Issues</a></li> <li class="float-r"><a class="rss" target="_blank" href="https://us15.campaign-archive.com/feed?u=fb62c89e22847741299664f39&amp;id=9c1872cac3" title="subscribe to the email archive feed" rel="noopener noreferrer">RSS</a></li> <li class="float-r more"><a href="javascript:;" data-to-toggle="#translate">Translate</a> <ul id="translate"> <li> <a rel="nofollow" title="English" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|en&amp;u=https%3A%2F%2Fus15.campaign-archive.com%2F%3Fu%3Dfb62c89e22847741299664f39%26id%3D723239a308">English</a> </li><li> <a rel="nofollow" title="العربية" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|ar&amp;u=https%3A%2F%2Fus15.campaign-archive.com%2F%3Fu%3Dfb62c89e22847741299664f39%26id%3D723239a308">العربية</a> </li><li> <a rel="nofollow" title="Afrikaans" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|af&amp;u=https%3A%2F%2Fus15.campaign-archive.com%2F%3Fu%3Dfb62c89e22847741299664f39%26id%3D723239a308">Afrikaans</a> </li><li> <a rel="nofollow" title="беларуская мова" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|be&amp;u=https%3A%2F%2Fus15.campaign-archive.com%2F%3Fu%3Dfb62c89e22847741299664f39%26id%3D723239a308">беларуская мова</a> </li><li> <a rel="nofollow" title="български" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|bg&amp;u=https%3A%2F%2Fus15.campaign-archive.com%2F%3Fu%3Dfb62c89e22847741299664f39%26id%3D723239a308">български</a> </li><li> <a rel="nofollow" title="català" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|ca&amp;u=https%3A%2F%2Fus15.campaign-archive.com%2F%3Fu%3Dfb62c89e22847741299664f39%26id%3D723239a308">català</a> </li><li> <a rel="nofollow" title="中文（简体）" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|zh-CN&amp;u=https%3A%2F%2Fus15.campaign-archive.com%2F%3Fu%3Dfb62c89e22847741299664f39%26id%3D723239a308">中文（简体）</a> </li><li> <a rel="nofollow" title="中文（繁體）" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|zh-TW&amp;u=https%3A%2F%2Fus15.campaign-archive.com%2F%3Fu%3Dfb62c89e22847741299664f39%26id%3D723239a308">中文（繁體）</a> </li><li> <a rel="nofollow" title="Hrvatski" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|hr&amp;u=https%3A%2F%2Fus15.campaign-archive.com%2F%3Fu%3Dfb62c89e22847741299664f39%26id%3D723239a308">Hrvatski</a> </li><li> <a rel="nofollow" title="Česky" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|cs&amp;u=https%3A%2F%2Fus15.campaign-archive.com%2F%3Fu%3Dfb62c89e22847741299664f39%26id%3D723239a308">Česky</a> </li><li> <a rel="nofollow" title="Dansk" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|da&amp;u=https%3A%2F%2Fus15.campaign-archive.com%2F%3Fu%3Dfb62c89e22847741299664f39%26id%3D723239a308">Dansk</a> </li><li> <a rel="nofollow" title="eesti&amp;nbsp;keel" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|et&amp;u=https%3A%2F%2Fus15.campaign-archive.com%2F%3Fu%3Dfb62c89e22847741299664f39%26id%3D723239a308">eesti&nbsp;keel</a> </li><li> <a rel="nofollow" title="Nederlands" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|nl&amp;u=https%3A%2F%2Fus15.campaign-archive.com%2F%3Fu%3Dfb62c89e22847741299664f39%26id%3D723239a308">Nederlands</a> </li><li> <a rel="nofollow" title="Suomi" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|fi&amp;u=https%3A%2F%2Fus15.campaign-archive.com%2F%3Fu%3Dfb62c89e22847741299664f39%26id%3D723239a308">Suomi</a> </li><li> <a rel="nofollow" title="Fran&amp;ccedil;ais" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|fr&amp;u=https%3A%2F%2Fus15.campaign-archive.com%2F%3Fu%3Dfb62c89e22847741299664f39%26id%3D723239a308">Fran&ccedil;ais</a> </li><li> <a rel="nofollow" title="Deutsch" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|de&amp;u=https%3A%2F%2Fus15.campaign-archive.com%2F%3Fu%3Dfb62c89e22847741299664f39%26id%3D723239a308">Deutsch</a> </li><li> <a rel="nofollow" title="&amp;Epsilon;&amp;lambda;&amp;lambda;&amp;eta;&amp;nu;&amp;iota;&amp;kappa;ή" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|el&amp;u=https%3A%2F%2Fus15.campaign-archive.com%2F%3Fu%3Dfb62c89e22847741299664f39%26id%3D723239a308">&Epsilon;&lambda;&lambda;&eta;&nu;&iota;&kappa;ή</a> </li><li> <a rel="nofollow" title="हिन्दी" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|hi&amp;u=https%3A%2F%2Fus15.campaign-archive.com%2F%3Fu%3Dfb62c89e22847741299664f39%26id%3D723239a308">हिन्दी</a> </li><li> <a rel="nofollow" title="Magyar" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|hu&amp;u=https%3A%2F%2Fus15.campaign-archive.com%2F%3Fu%3Dfb62c89e22847741299664f39%26id%3D723239a308">Magyar</a> </li><li> <a rel="nofollow" title="Gaeilge" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|ga&amp;u=https%3A%2F%2Fus15.campaign-archive.com%2F%3Fu%3Dfb62c89e22847741299664f39%26id%3D723239a308">Gaeilge</a> </li><li> <a rel="nofollow" title="Indonesia" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|id&amp;u=https%3A%2F%2Fus15.campaign-archive.com%2F%3Fu%3Dfb62c89e22847741299664f39%26id%3D723239a308">Indonesia</a> </li><li> <a rel="nofollow" title="íslenska" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|is&amp;u=https%3A%2F%2Fus15.campaign-archive.com%2F%3Fu%3Dfb62c89e22847741299664f39%26id%3D723239a308">íslenska</a> </li><li> <a rel="nofollow" title="Italiano" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|it&amp;u=https%3A%2F%2Fus15.campaign-archive.com%2F%3Fu%3Dfb62c89e22847741299664f39%26id%3D723239a308">Italiano</a> </li><li> <a rel="nofollow" title="日本語" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|ja&amp;u=https%3A%2F%2Fus15.campaign-archive.com%2F%3Fu%3Dfb62c89e22847741299664f39%26id%3D723239a308">日本語</a> </li><li> <a rel="nofollow" title="ភាសាខ្មែរ" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|km&amp;u=https%3A%2F%2Fus15.campaign-archive.com%2F%3Fu%3Dfb62c89e22847741299664f39%26id%3D723239a308">ភាសាខ្មែរ</a> </li><li> <a rel="nofollow" title="한국어" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|ko&amp;u=https%3A%2F%2Fus15.campaign-archive.com%2F%3Fu%3Dfb62c89e22847741299664f39%26id%3D723239a308">한국어</a> </li><li> <a rel="nofollow" title="македонски&amp;nbsp;јазик" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|mk&amp;u=https%3A%2F%2Fus15.campaign-archive.com%2F%3Fu%3Dfb62c89e22847741299664f39%26id%3D723239a308">македонски&nbsp;јазик</a> </li><li> <a rel="nofollow" title="بهاس ملايو" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|ms&amp;u=https%3A%2F%2Fus15.campaign-archive.com%2F%3Fu%3Dfb62c89e22847741299664f39%26id%3D723239a308">بهاس ملايو</a> </li><li> <a rel="nofollow" title="Malti" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|mt&amp;u=https%3A%2F%2Fus15.campaign-archive.com%2F%3Fu%3Dfb62c89e22847741299664f39%26id%3D723239a308">Malti</a> </li><li> <a rel="nofollow" title="Norsk" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|no&amp;u=https%3A%2F%2Fus15.campaign-archive.com%2F%3Fu%3Dfb62c89e22847741299664f39%26id%3D723239a308">Norsk</a> </li><li> <a rel="nofollow" title="Polski" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|pl&amp;u=https%3A%2F%2Fus15.campaign-archive.com%2F%3Fu%3Dfb62c89e22847741299664f39%26id%3D723239a308">Polski</a> </li><li> <a rel="nofollow" title="Portugu&amp;ecirc;s" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|pt&amp;u=https%3A%2F%2Fus15.campaign-archive.com%2F%3Fu%3Dfb62c89e22847741299664f39%26id%3D723239a308">Portugu&ecirc;s</a> </li><li> <a rel="nofollow" title="Portugu&amp;ecirc;s&amp;nbsp;-&amp;nbsp;Portugal" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|pt-PT&amp;u=https%3A%2F%2Fus15.campaign-archive.com%2F%3Fu%3Dfb62c89e22847741299664f39%26id%3D723239a308">Portugu&ecirc;s&nbsp;-&nbsp;Portugal</a> </li><li> <a rel="nofollow" title="Rom&amp;acirc;nă" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|ro&amp;u=https%3A%2F%2Fus15.campaign-archive.com%2F%3Fu%3Dfb62c89e22847741299664f39%26id%3D723239a308">Rom&acirc;nă</a> </li><li> <a rel="nofollow" title="Русский" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|ru&amp;u=https%3A%2F%2Fus15.campaign-archive.com%2F%3Fu%3Dfb62c89e22847741299664f39%26id%3D723239a308">Русский</a> </li><li> <a rel="nofollow" title="Espa&amp;ntilde;ol" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|es&amp;u=https%3A%2F%2Fus15.campaign-archive.com%2F%3Fu%3Dfb62c89e22847741299664f39%26id%3D723239a308">Espa&ntilde;ol</a> </li><li> <a rel="nofollow" title="Kiswahili" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|sw&amp;u=https%3A%2F%2Fus15.campaign-archive.com%2F%3Fu%3Dfb62c89e22847741299664f39%26id%3D723239a308">Kiswahili</a> </li><li> <a rel="nofollow" title="Svenska" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|sv&amp;u=https%3A%2F%2Fus15.campaign-archive.com%2F%3Fu%3Dfb62c89e22847741299664f39%26id%3D723239a308">Svenska</a> </li><li> <a rel="nofollow" title="עברית" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|iw&amp;u=https%3A%2F%2Fus15.campaign-archive.com%2F%3Fu%3Dfb62c89e22847741299664f39%26id%3D723239a308">עברית</a> </li><li> <a rel="nofollow" title="Lietuvių" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|lt&amp;u=https%3A%2F%2Fus15.campaign-archive.com%2F%3Fu%3Dfb62c89e22847741299664f39%26id%3D723239a308">Lietuvių</a> </li><li> <a rel="nofollow" title="latviešu" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|lv&amp;u=https%3A%2F%2Fus15.campaign-archive.com%2F%3Fu%3Dfb62c89e22847741299664f39%26id%3D723239a308">latviešu</a> </li><li> <a rel="nofollow" title="slovenčina" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|sk&amp;u=https%3A%2F%2Fus15.campaign-archive.com%2F%3Fu%3Dfb62c89e22847741299664f39%26id%3D723239a308">slovenčina</a> </li><li> <a rel="nofollow" title="slovenščina" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|sl&amp;u=https%3A%2F%2Fus15.campaign-archive.com%2F%3Fu%3Dfb62c89e22847741299664f39%26id%3D723239a308">slovenščina</a> </li><li> <a rel="nofollow" title="српски" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|sr&amp;u=https%3A%2F%2Fus15.campaign-archive.com%2F%3Fu%3Dfb62c89e22847741299664f39%26id%3D723239a308">српски</a> </li><li> <a rel="nofollow" title="தமிழ்" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|ta&amp;u=https%3A%2F%2Fus15.campaign-archive.com%2F%3Fu%3Dfb62c89e22847741299664f39%26id%3D723239a308">தமிழ்</a> </li><li> <a rel="nofollow" title="ภาษาไทย" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|th&amp;u=https%3A%2F%2Fus15.campaign-archive.com%2F%3Fu%3Dfb62c89e22847741299664f39%26id%3D723239a308">ภาษาไทย</a> </li><li> <a rel="nofollow" title="Türkçe" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|tr&amp;u=https%3A%2F%2Fus15.campaign-archive.com%2F%3Fu%3Dfb62c89e22847741299664f39%26id%3D723239a308">Türkçe</a> </li><li> <a rel="nofollow" title="Filipino" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|tl&amp;u=https%3A%2F%2Fus15.campaign-archive.com%2F%3Fu%3Dfb62c89e22847741299664f39%26id%3D723239a308">Filipino</a> </li><li> <a rel="nofollow" title="украї́нська" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|uk&amp;u=https%3A%2F%2Fus15.campaign-archive.com%2F%3Fu%3Dfb62c89e22847741299664f39%26id%3D723239a308">украї́нська</a> </li><li> <a rel="nofollow" title="Tiếng&amp;nbsp;Việt" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|vi&amp;u=https%3A%2F%2Fus15.campaign-archive.com%2F%3Fu%3Dfb62c89e22847741299664f39%26id%3D723239a308">Tiếng&nbsp;Việt</a> </li> </ul> </li> </ul> </div>
+        <body style="height: 100%;margin: 0;padding: 0;width: 100%;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+        <!---->
+        <!--[if !gte mso 9]><!----><span class="mcnPreviewText" style="display:none; font-size:0px; line-height:0px; max-height:0px; max-width:0px; opacity:0; overflow:hidden; visibility:hidden; mso-hide:all;">Hoy queremos compartirte una sistematización de los principales temas que tratamos en el #ENVIS2024</span><!--<![endif]-->
+        <!---->
+        <center>
+            <table align="center" border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" id="bodyTable" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;height: 100%;margin: 0;padding: 0;width: 100%;">
+                <tr>
+                    <td align="center" valign="top" id="bodyCell" style="mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;height: 100%;margin: 0;padding: 0;width: 100%;">
+                        <!-- BEGIN TEMPLATE // -->
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                            <tr>
+                                <td align="center" valign="top" id="templateHeader" data-template-container="" style="background:#ffffff none no-repeat center/cover;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;background-color: #ffffff;background-image: none;background-repeat: no-repeat;background-position: center;background-size: cover;border-top: 0;border-bottom: 0;padding-top: 0px;padding-bottom: 0px;">
+                                    <!--[if (gte mso 9)|(IE)]>
+                                    <table align="center" border="0" cellspacing="0" cellpadding="0" width="600" style="width:600px;">
+                                    <tr>
+                                    <td align="center" valign="top" width="600" style="width:600px;">
+                                    <![endif]-->
+                                    <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" class="templateContainer" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;max-width: 600px !important;">
+                                        <tr>
+                                            <td valign="top" class="headerContainer" style="background:transparent none no-repeat center/cover;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;background-color: transparent;background-image: none;background-repeat: no-repeat;background-position: center;background-size: cover;border-top: 0;border-bottom: 0;padding-top: 0;padding-bottom: 0;"><table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnImageBlock" style="min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+    <tbody class="mcnImageBlockOuter">
+            <tr>
+                <td valign="top" style="padding: 0px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;" class="mcnImageBlockInner">
+                    <table align="left" width="100%" border="0" cellpadding="0" cellspacing="0" class="mcnImageContentContainer" style="min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                        <tbody><tr>
+                            <td class="mcnImageContent" valign="top" style="padding-right: 0px;padding-left: 0px;padding-top: 0;padding-bottom: 0;text-align: center;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                
+                                    
+                                        <img align="center" alt="" src="https://mcusercontent.com/fb62c89e22847741299664f39/images/d590c700-3f93-89eb-e88c-6dc911874a14.png" width="600" style="max-width: 6669px;padding-bottom: 0;display: inline !important;vertical-align: bottom;border: 0;height: auto;outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;" class="mcnImage">
+                                    
+                                
+                            </td>
+                        </tr>
+                    </tbody></table>
+                </td>
+            </tr>
+    </tbody>
+</table><table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnTextBlock" style="min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+    <tbody class="mcnTextBlockOuter">
+        <tr>
+            <td valign="top" class="mcnTextBlockInner" style="padding-top: 9px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+              	<!--[if mso]>
+				<table align="left" border="0" cellspacing="0" cellpadding="0" width="100%" style="width:100%;">
+				<tr>
+				<![endif]-->
+			    
+				<!--[if mso]>
+				<td valign="top" width="600" style="width:600px;">
+				<![endif]-->
+                <table align="left" border="0" cellpadding="0" cellspacing="0" style="max-width: 100%;min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;" width="100%" class="mcnTextContentContainer">
+                    <tbody><tr>
+                        
+                        <td valign="top" class="mcnTextContent" style="padding-top: 0;padding-right: 18px;padding-bottom: 9px;padding-left: 18px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;word-break: break-word;color: #757575;font-family: Helvetica;font-size: 16px;line-height: 150%;text-align: left;">
+                        
+                            <div style="text-align: center;"><span style="font-size:30px"><span style="color:#f09243"><font face="open sans, helvetica neue, helvetica, arial, sans-serif"><strong>&nbsp;<br>
+¡Hola</strong></font><font face="open sans, helvetica neue, helvetica, arial, sans-serif"><strong>!&nbsp;</strong></font></span></span></div>
+
+<div style="text-align: center;"><br>
+El pasado 6 de enero en&nbsp;<strong>Ensenada, Puerto Varas</strong>, fuimos parte del&nbsp;Encuentro Nacional de Vinculación<strong> #ENVIS2024</strong>, organizado por Balloon Latam, la Corporación 3xi y la Municipalidad de Puerto Varas.</div>
+
+<div>
+<div>&nbsp;</div>
+
+<p dir="ltr" style="text-align: center;margin: 10px 0;padding: 0;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;color: #757575;font-family: Helvetica;font-size: 16px;line-height: 150%;">Esta quinta versión del ENVIS, reunió a <strong>1.592 personas</strong>, de diversas regiones, bajo el lema <strong>“Frente a climas extremos: Exploremos el Sueño País”</strong>.<br>
+&nbsp;</p>
+</div>
+
+                        </td>
+                    </tr>
+                </tbody></table>
+				<!--[if mso]>
+				</td>
+				<![endif]-->
+                
+				<!--[if mso]>
+				</tr>
+				</table>
+				<![endif]-->
+            </td>
+        </tr>
+    </tbody>
+</table><table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnImageBlock" style="min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+    <tbody class="mcnImageBlockOuter">
+            <tr>
+                <td valign="top" style="padding: 0px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;" class="mcnImageBlockInner">
+                    <table align="left" width="100%" border="0" cellpadding="0" cellspacing="0" class="mcnImageContentContainer" style="min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                        <tbody><tr>
+                            <td class="mcnImageContent" valign="top" style="padding-right: 0px;padding-left: 0px;padding-top: 0;padding-bottom: 0;text-align: center;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                
+                                    
+                                        <img align="center" alt="" src="https://mcusercontent.com/fb62c89e22847741299664f39/images/a0bf8758-49a4-ffd3-4787-b44f79962f12.jpg" width="600" style="max-width: 3999px;padding-bottom: 0;display: inline !important;vertical-align: bottom;border: 0;height: auto;outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;" class="mcnImage">
+                                    
+                                
+                            </td>
+                        </tr>
+                    </tbody></table>
+                </td>
+            </tr>
+    </tbody>
+</table><table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnDividerBlock" style="min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;table-layout: fixed !important;">
+    <tbody class="mcnDividerBlockOuter">
+        <tr>
+            <td class="mcnDividerBlockInner" style="min-width: 100%;padding: 18px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                <table class="mcnDividerContent" border="0" cellpadding="0" cellspacing="0" width="100%" style="min-width: 100%;border-top: 2px solid #EAEAEA;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                    <tbody><tr>
+                        <td style="mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                            <span></span>
+                        </td>
+                    </tr>
+                </tbody></table>
+<!--            
+                <td class="mcnDividerBlockInner" style="padding: 18px;">
+                <hr class="mcnDividerContent" style="border-bottom-color:none; border-left-color:none; border-right-color:none; border-bottom-width:0; border-left-width:0; border-right-width:0; margin-top:0; margin-right:0; margin-bottom:0; margin-left:0;" />
+-->
+            </td>
+        </tr>
+    </tbody>
+</table><table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnBoxedTextBlock" style="min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+    <!--[if gte mso 9]>
+	<table align="center" border="0" cellspacing="0" cellpadding="0" width="100%">
+	<![endif]-->
+	<tbody class="mcnBoxedTextBlockOuter">
+        <tr>
+            <td valign="top" class="mcnBoxedTextBlockInner" style="mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                
+				<!--[if gte mso 9]>
+				<td align="center" valign="top" ">
+				<![endif]-->
+                <table align="left" border="0" cellpadding="0" cellspacing="0" width="100%" style="min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;" class="mcnBoxedTextContentContainer">
+                    <tbody><tr>
+                        
+                        <td style="padding-top: 9px;padding-left: 18px;padding-bottom: 9px;padding-right: 18px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                        
+                            <table border="0" cellspacing="0" class="mcnTextContentContainer" width="100%" style="min-width: 100% !important;background-color: #33A4A4;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                <tbody><tr>
+                                    <td valign="top" class="mcnTextContent" style="padding: 18px;color: #FFFFFF;font-family: Lato, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-size: 11px;font-style: normal;font-weight: bold;line-height: 200%;text-align: center;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;word-break: break-word;">
+                                        <div style="text-align: center;"><span style="font-family:lato,helvetica neue,helvetica,arial,sans-serif"><span style="font-size:18px">Antes que todo, queremos agradecerte por haber sido parte de este cuarto Encuentro Nacional de Vinculación Social.</span></span></div>
+
+                                    </td>
+                                </tr>
+                            </tbody></table>
+                        </td>
+                    </tr>
+                </tbody></table>
+				<!--[if gte mso 9]>
+				</td>
+				<![endif]-->
+                
+				<!--[if gte mso 9]>
+                </tr>
+                </table>
+				<![endif]-->
+            </td>
+        </tr>
+    </tbody>
+</table><table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnTextBlock" style="min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+    <tbody class="mcnTextBlockOuter">
+        <tr>
+            <td valign="top" class="mcnTextBlockInner" style="padding-top: 9px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+              	<!--[if mso]>
+				<table align="left" border="0" cellspacing="0" cellpadding="0" width="100%" style="width:100%;">
+				<tr>
+				<![endif]-->
+			    
+				<!--[if mso]>
+				<td valign="top" width="600" style="width:600px;">
+				<![endif]-->
+                <table align="left" border="0" cellpadding="0" cellspacing="0" style="max-width: 100%;min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;" width="100%" class="mcnTextContentContainer">
+                    <tbody><tr>
+                        
+                        <td valign="top" class="mcnTextContent" style="padding-top: 0;padding-right: 18px;padding-bottom: 9px;padding-left: 18px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;word-break: break-word;color: #757575;font-family: Helvetica;font-size: 16px;line-height: 150%;text-align: left;">
+                        
+                            <div style="text-align: center;"><br>
+<strong>Los principales hallazgos se registraron y plasmaron en un documento que compartimos aquí</strong><br>
+&nbsp;</div>
+
+                        </td>
+                    </tr>
+                </tbody></table>
+				<!--[if mso]>
+				</td>
+				<![endif]-->
+                
+				<!--[if mso]>
+				</tr>
+				</table>
+				<![endif]-->
+            </td>
+        </tr>
+    </tbody>
+</table><table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnButtonBlock" style="min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+    <tbody class="mcnButtonBlockOuter">
+        <tr>
+            <td style="padding-top: 0;padding-right: 18px;padding-bottom: 18px;padding-left: 18px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;" valign="top" align="center" class="mcnButtonBlockInner">
+                <table border="0" cellpadding="0" cellspacing="0" class="mcnButtonContentContainer" style="border-collapse: separate !important;border-radius: 16px;background-color: #F09243;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                    <tbody>
+                        <tr>
+                            <td align="center" valign="middle" class="mcnButtonContent" style="font-family: Lato, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-size: 22px;padding: 18px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                <a class="mcnButton " title="Revisa los principales hallazgos ENVIS 2024, aquí" href="https://drive.google.com/file/d/1Z-H63qeS23i78xK24HsLSNcNzYSvU1FS/view?usp=drive_link" target="_blank" style="font-weight: bold;letter-spacing: normal;line-height: 100%;text-align: center;text-decoration: none;color: #FFFFFF;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;display: block;">Revisa los principales hallazgos ENVIS 2024, aquí</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+    </tbody>
+</table><table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnTextBlock" style="min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+    <tbody class="mcnTextBlockOuter">
+        <tr>
+            <td valign="top" class="mcnTextBlockInner" style="padding-top: 9px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+              	<!--[if mso]>
+				<table align="left" border="0" cellspacing="0" cellpadding="0" width="100%" style="width:100%;">
+				<tr>
+				<![endif]-->
+			    
+				<!--[if mso]>
+				<td valign="top" width="600" style="width:600px;">
+				<![endif]-->
+                <table align="left" border="0" cellpadding="0" cellspacing="0" style="max-width: 100%;min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;" width="100%" class="mcnTextContentContainer">
+                    <tbody><tr>
+                        
+                        <td valign="top" class="mcnTextContent" style="padding-top: 0;padding-right: 18px;padding-bottom: 9px;padding-left: 18px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;word-break: break-word;color: #757575;font-family: Helvetica;font-size: 16px;line-height: 150%;text-align: left;">
+                        
+                            <p dir="ltr" style="text-align: center;margin: 10px 0;padding: 0;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;color: #757575;font-family: Helvetica;font-size: 16px;line-height: 150%;">Destacan 3 pilares:<strong> los desafíos vitales en torno a la escasez hídrica y posibles soluciones basadas en la educación, la comunidad y el diálogo</strong>. Además, se subrayó la importancia de la <strong>participación</strong> de las <strong>mujeres en sus comunidades</strong> <strong>para la sostenibilidad</strong> y surgieron como esperanza, las épicas referidas a la naturaleza y el cuidado de la vida.</p>
+
+<p dir="ltr" style="text-align: center;margin: 10px 0;padding: 0;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;color: #757575;font-family: Helvetica;font-size: 16px;line-height: 150%;">Las conversaciones que ocurren en los encuentros y su sistematización, son <strong>oportunidades</strong> para <strong>establecer hojas de ruta</strong> que surgen cuando se reúnen personas diversas.&nbsp;&nbsp;</p>
+
+<p dir="ltr" style="text-align: center;margin: 10px 0;padding: 0;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;color: #757575;font-family: Helvetica;font-size: 16px;line-height: 150%;">Agradecemos el apoyo del grupo de facilitadores, provenientes de diversos lugares del país,&nbsp;con los que pudimos recoger las distintas reflexiones e ideas&nbsp;que ustedes, los participantes de este encuentro, compartieron ese día e hicieron de esta experiencia algo trascendente para avanzar a través de un diálogo sostenible y vital en el desarrollo de Chile.&nbsp;</p>
+
+<p dir="ltr" style="text-align: center;margin: 10px 0;padding: 0;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;color: #757575;font-family: Helvetica;font-size: 16px;line-height: 150%;">La sistematización que hoy les compartimos&nbsp;reúne los principales temas que tratamos, las ideas que más escuchamos y aquellas sobre las que creemos que podemos seguir avanzando con la voluntad de encuentro&nbsp;que vimos y ratificamos en el <strong>#ENVIS2024.&nbsp;</strong></p>
+
+                        </td>
+                    </tr>
+                </tbody></table>
+				<!--[if mso]>
+				</td>
+				<![endif]-->
+                
+				<!--[if mso]>
+				</tr>
+				</table>
+				<![endif]-->
+            </td>
+        </tr>
+    </tbody>
+</table><table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnDividerBlock" style="min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;table-layout: fixed !important;">
+    <tbody class="mcnDividerBlockOuter">
+        <tr>
+            <td class="mcnDividerBlockInner" style="min-width: 100%;padding: 18px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                <table class="mcnDividerContent" border="0" cellpadding="0" cellspacing="0" width="100%" style="min-width: 100%;border-top: 2px solid #EAEAEA;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                    <tbody><tr>
+                        <td style="mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                            <span></span>
+                        </td>
+                    </tr>
+                </tbody></table>
+<!--            
+                <td class="mcnDividerBlockInner" style="padding: 18px;">
+                <hr class="mcnDividerContent" style="border-bottom-color:none; border-left-color:none; border-right-color:none; border-bottom-width:0; border-left-width:0; border-right-width:0; margin-top:0; margin-right:0; margin-bottom:0; margin-left:0;" />
+-->
+            </td>
+        </tr>
+    </tbody>
+</table><table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnImageBlock" style="min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+    <tbody class="mcnImageBlockOuter">
+            <tr>
+                <td valign="top" style="padding: 0px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;" class="mcnImageBlockInner">
+                    <table align="left" width="100%" border="0" cellpadding="0" cellspacing="0" class="mcnImageContentContainer" style="min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                        <tbody><tr>
+                            <td class="mcnImageContent" valign="top" style="padding-right: 0px;padding-left: 0px;padding-top: 0;padding-bottom: 0;text-align: center;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                
+                                    
+                                        <img align="center" alt="" src="https://mcusercontent.com/fb62c89e22847741299664f39/_compresseds/f412a99e-1c2b-6a57-8468-871485f4f54a.jpg" width="600" style="max-width: 6240px;padding-bottom: 0;display: inline !important;vertical-align: bottom;border: 0;height: auto;outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;" class="mcnImage">
+                                    
+                                
+                            </td>
+                        </tr>
+                    </tbody></table>
+                </td>
+            </tr>
+    </tbody>
+</table><table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnBoxedTextBlock" style="min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+    <!--[if gte mso 9]>
+	<table align="center" border="0" cellspacing="0" cellpadding="0" width="100%">
+	<![endif]-->
+	<tbody class="mcnBoxedTextBlockOuter">
+        <tr>
+            <td valign="top" class="mcnBoxedTextBlockInner" style="mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                
+				<!--[if gte mso 9]>
+				<td align="center" valign="top" ">
+				<![endif]-->
+                <table align="left" border="0" cellpadding="0" cellspacing="0" width="100%" style="min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;" class="mcnBoxedTextContentContainer">
+                    <tbody><tr>
+                        
+                        <td style="padding-top: 9px;padding-left: 18px;padding-bottom: 9px;padding-right: 18px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                        
+                            <table border="0" cellspacing="0" class="mcnTextContentContainer" width="100%" style="min-width: 100% !important;background-color: #33A4A4;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                <tbody><tr>
+                                    <td valign="top" class="mcnTextContent" style="padding: 18px;color: #FFFFFF;font-family: Lato, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-size: 11px;font-style: normal;font-weight: bold;line-height: 200%;text-align: center;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;word-break: break-word;">
+                                        <div style="text-align: center;"><font face="lato, helvetica neue, helvetica, arial, sans-serif"><span style="font-size:18px">¡Muchas gracias por ser parte!</span></font></div>
+
+                                    </td>
+                                </tr>
+                            </tbody></table>
+                        </td>
+                    </tr>
+                </tbody></table>
+				<!--[if gte mso 9]>
+				</td>
+				<![endif]-->
+                
+				<!--[if gte mso 9]>
+                </tr>
+                </table>
+				<![endif]-->
+            </td>
+        </tr>
+    </tbody>
+</table></td>
+                                        </tr>
+                                    </table>
+                                    <!--[if (gte mso 9)|(IE)]>
+                                    </td>
+                                    </tr>
+                                    </table>
+                                    <![endif]-->
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center" valign="top" id="templateBody" data-template-container="" style="background:#FFFFFF none repeat 50% 50%/auto;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;background-color: #FFFFFF;background-image: none;background-repeat: repeat;background-position: 50% 50%;background-size: auto;border-top: 0;border-bottom: 0;padding-top: 0px;padding-bottom: 0px;">
+                                    <!--[if (gte mso 9)|(IE)]>
+                                    <table align="center" border="0" cellspacing="0" cellpadding="0" width="600" style="width:600px;">
+                                    <tr>
+                                    <td align="center" valign="top" width="600" style="width:600px;">
+                                    <![endif]-->
+                                    <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" class="templateContainer" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;max-width: 600px !important;">
+                                        <tr>
+                                            <td valign="top" class="bodyContainer" style="background:transparent none no-repeat center/cover;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;background-color: transparent;background-image: none;background-repeat: no-repeat;background-position: center;background-size: cover;border-top: 0;border-bottom: 0;padding-top: 0;padding-bottom: 0;"></td>
+                                        </tr>
+                                    </table>
+                                    <!--[if (gte mso 9)|(IE)]>
+                                    </td>
+                                    </tr>
+                                    </table>
+                                    <![endif]-->
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center" valign="top" id="templateFooter" data-template-container="" style="background:#transparent none no-repeat center/cover;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;background-color: #transparent;background-image: none;background-repeat: no-repeat;background-position: center;background-size: cover;border-top: 0;border-bottom: 0;padding-top: 0px;padding-bottom: 0px;">
+                                    <!--[if (gte mso 9)|(IE)]>
+                                    <table align="center" border="0" cellspacing="0" cellpadding="0" width="600" style="width:600px;">
+                                    <tr>
+                                    <td align="center" valign="top" width="600" style="width:600px;">
+                                    <![endif]-->
+                                    <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" class="templateContainer" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;max-width: 600px !important;">
+                                        <tr>
+                                            <td valign="top" class="footerContainer" style="background:transparent none no-repeat center/cover;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;background-color: transparent;background-image: none;background-repeat: no-repeat;background-position: center;background-size: cover;border-top: 0;border-bottom: 0;padding-top: 0;padding-bottom: 0;"><table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnFollowBlock" style="min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+    <tbody class="mcnFollowBlockOuter">
+        <tr>
+            <td align="center" valign="top" style="padding: 9px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;" class="mcnFollowBlockInner">
+                <table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnFollowContentContainer" style="min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+    <tbody><tr>
+        <td align="center" style="padding-left: 9px;padding-right: 9px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+            <table border="0" cellpadding="0" cellspacing="0" width="100%" style="min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;" class="mcnFollowContent">
+                <tbody><tr>
+                    <td align="center" valign="top" style="padding-top: 9px;padding-right: 9px;padding-left: 9px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                        <table align="center" border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                            <tbody><tr>
+                                <td align="center" valign="top" style="mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                    <!--[if mso]>
+                                    <table align="center" border="0" cellspacing="0" cellpadding="0">
+                                    <tr>
+                                    <![endif]-->
+                                    
+                                        <!--[if mso]>
+                                        <td align="center" valign="top">
+                                        <![endif]-->
+                                        
+                                        
+                                            <table align="left" border="0" cellpadding="0" cellspacing="0" style="display: inline;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                                <tbody><tr>
+                                                    <td valign="top" style="padding-right: 10px;padding-bottom: 9px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;" class="mcnFollowContentItemContainer">
+                                                        <table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnFollowContentItem" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                                            <tbody><tr>
+                                                                <td align="left" valign="middle" style="padding-top: 5px;padding-right: 10px;padding-bottom: 5px;padding-left: 9px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                                                    <table align="left" border="0" cellpadding="0" cellspacing="0" width="" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                                                        <tbody><tr>
+                                                                            
+                                                                                <td align="center" valign="middle" width="24" class="mcnFollowIconContent" style="mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                                                                    <a href="http://www.facebook.com/balloonlatam" target="_blank" style="mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"><img src="https://cdn-images.mailchimp.com/icons/social-block-v2/color-facebook-48.png" alt="Facebook" style="display: block;border: 0;height: auto;outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;" height="24" width="24" class=""></a>
+                                                                                </td>
+                                                                            
+                                                                            
+                                                                        </tr>
+                                                                    </tbody></table>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody></table>
+                                                    </td>
+                                                </tr>
+                                            </tbody></table>
+                                        
+                                        <!--[if mso]>
+                                        </td>
+                                        <![endif]-->
+                                    
+                                        <!--[if mso]>
+                                        <td align="center" valign="top">
+                                        <![endif]-->
+                                        
+                                        
+                                            <table align="left" border="0" cellpadding="0" cellspacing="0" style="display: inline;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                                <tbody><tr>
+                                                    <td valign="top" style="padding-right: 10px;padding-bottom: 9px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;" class="mcnFollowContentItemContainer">
+                                                        <table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnFollowContentItem" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                                            <tbody><tr>
+                                                                <td align="left" valign="middle" style="padding-top: 5px;padding-right: 10px;padding-bottom: 5px;padding-left: 9px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                                                    <table align="left" border="0" cellpadding="0" cellspacing="0" width="" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                                                        <tbody><tr>
+                                                                            
+                                                                                <td align="center" valign="middle" width="24" class="mcnFollowIconContent" style="mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                                                                    <a href="https://www.twitter.com/balloonlatam/" target="_blank" style="mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"><img src="https://cdn-images.mailchimp.com/icons/social-block-v2/color-twitter-48.png" alt="Twitter" style="display: block;border: 0;height: auto;outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;" height="24" width="24" class=""></a>
+                                                                                </td>
+                                                                            
+                                                                            
+                                                                        </tr>
+                                                                    </tbody></table>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody></table>
+                                                    </td>
+                                                </tr>
+                                            </tbody></table>
+                                        
+                                        <!--[if mso]>
+                                        </td>
+                                        <![endif]-->
+                                    
+                                        <!--[if mso]>
+                                        <td align="center" valign="top">
+                                        <![endif]-->
+                                        
+                                        
+                                            <table align="left" border="0" cellpadding="0" cellspacing="0" style="display: inline;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                                <tbody><tr>
+                                                    <td valign="top" style="padding-right: 0;padding-bottom: 9px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;" class="mcnFollowContentItemContainer">
+                                                        <table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnFollowContentItem" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                                            <tbody><tr>
+                                                                <td align="left" valign="middle" style="padding-top: 5px;padding-right: 10px;padding-bottom: 5px;padding-left: 9px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                                                    <table align="left" border="0" cellpadding="0" cellspacing="0" width="" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                                                        <tbody><tr>
+                                                                            
+                                                                                <td align="center" valign="middle" width="24" class="mcnFollowIconContent" style="mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                                                                    <a href="http://instagram.com/balloonlatam" target="_blank" style="mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"><img src="https://cdn-images.mailchimp.com/icons/social-block-v2/color-instagram-48.png" alt="Instagram" style="display: block;border: 0;height: auto;outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;" height="24" width="24" class=""></a>
+                                                                                </td>
+                                                                            
+                                                                            
+                                                                        </tr>
+                                                                    </tbody></table>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody></table>
+                                                    </td>
+                                                </tr>
+                                            </tbody></table>
+                                        
+                                        <!--[if mso]>
+                                        </td>
+                                        <![endif]-->
+                                    
+                                    <!--[if mso]>
+                                    </tr>
+                                    </table>
+                                    <![endif]-->
+                                </td>
+                            </tr>
+                        </tbody></table>
+                    </td>
+                </tr>
+            </tbody></table>
+        </td>
+    </tr>
+</tbody></table>
+
+            </td>
+        </tr>
+    </tbody>
+</table><table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnTextBlock" style="min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+    <tbody class="mcnTextBlockOuter">
+        <tr>
+            <td valign="top" class="mcnTextBlockInner" style="padding-top: 9px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+              	<!--[if mso]>
+				<table align="left" border="0" cellspacing="0" cellpadding="0" width="100%" style="width:100%;">
+				<tr>
+				<![endif]-->
+			    
+				<!--[if mso]>
+				<td valign="top" width="600" style="width:600px;">
+				<![endif]-->
+                <table align="left" border="0" cellpadding="0" cellspacing="0" style="max-width: 100%;min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;" width="100%" class="mcnTextContentContainer">
+                    <tbody><tr>
+                        
+                        <td valign="top" class="mcnTextContent" style="padding: 0px 18px 9px;text-align: center;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;word-break: break-word;color: #FFFFFF;font-family: Helvetica;font-size: 12px;line-height: 150%;">
+                        
+                            <span style="color:#000000"><em>Copyright © 2019 BALLOON LATAM, todos los derechos reservados.</em><br>
+<br>
+<br>
+<strong>Our mailing address is:</strong><br>
+contacto@balloonlatam.com<br>
+<br>
+Want to change how you receive these emails?<br>
+You can </span><a href="https://balloonlatam.us15.list-manage.com/profile?u=fb62c89e22847741299664f39&id=9c1872cac3&e=[UNIQID]&c=723239a308" style="mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;color: #FFFFFF;font-weight: normal;text-decoration: underline;"><span style="color:#000000">update your preferences</span></a><span style="color:#000000"> or </span><a href="https://balloonlatam.us15.list-manage.com/unsubscribe?u=fb62c89e22847741299664f39&id=9c1872cac3&t=b&e=[UNIQID]&c=723239a308" style="mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;color: #FFFFFF;font-weight: normal;text-decoration: underline;"><span style="color:#000000">unsubscribe from this list</span></a><span style="color:#000000">.</span><br>
+<br>
+&nbsp;
+                        </td>
+                    </tr>
+                </tbody></table>
+				<!--[if mso]>
+				</td>
+				<![endif]-->
+                
+				<!--[if mso]>
+				</tr>
+				</table>
+				<![endif]-->
+            </td>
+        </tr>
+    </tbody>
+</table><table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnDividerBlock" style="min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;table-layout: fixed !important;">
+    <tbody class="mcnDividerBlockOuter">
+        <tr>
+            <td class="mcnDividerBlockInner" style="min-width: 100%;padding: 10px 18px 25px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                <table class="mcnDividerContent" border="0" cellpadding="0" cellspacing="0" width="100%" style="min-width: 100%;border-top: 2px solid #EEEEEE;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                    <tbody><tr>
+                        <td style="mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                            <span></span>
+                        </td>
+                    </tr>
+                </tbody></table>
+<!--            
+                <td class="mcnDividerBlockInner" style="padding: 18px;">
+                <hr class="mcnDividerContent" style="border-bottom-color:none; border-left-color:none; border-right-color:none; border-bottom-width:0; border-left-width:0; border-right-width:0; margin-top:0; margin-right:0; margin-bottom:0; margin-left:0;" />
+-->
+            </td>
+        </tr>
+    </tbody>
+</table></td>
+                                        </tr>
+                                    </table>
+                                    <!--[if (gte mso 9)|(IE)]>
+                                    </td>
+                                    </tr>
+                                    </table>
+                                    <![endif]-->
+                                </td>
+                            </tr>
+                        </table>
+                        <!-- // END TEMPLATE -->
+                    </td>
+                </tr>
+            </table>
+        </center>
+    </body>    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script><script type="text/javascript">
+            $(document).ready(function() {
+                document.getElementById("copyToClipboard").addEventListener("click", function () {
+                    var input = document.getElementById("clipboardSource");
+                    input.select();
+                    var successful = document.execCommand("copy");
+                    if (successful) {
+                        alert('Copied "' + input.value + '" to your clipboard.');
+                    } else {
+                        throw new Error("Failed to copy text (verify caller was in the context of an event handler)");
+                    }
+                });
+
+                $('li.more > a').click(function(){
+                    var toToggle = $($(this).attr('data-to-toggle'));
+                    if(toToggle.is(':visible')){
+                        toToggle.slideUp('fast');
+                        $(this).removeClass('is-active');
+                        if ($('#awesomebar').find('.is-active').length < 1){
+                            $('#awesomebar').removeClass('sub-active');
+                        }
+                    } else {
+                        toToggle.slideDown('fast');
+                        $(this).addClass('is-active');
+                        $('#awesomebar').addClass('sub-active');
+                    }
+                    return false;
+                });
+
+            });
+        </script></body> </html>
+`;
+
+    // Inicializar TinyMCE
+    tinymce.init({
+      selector: '#editor',
+      height: 600,
+      menubar: false,
+      plugins: 'link image code table lists',
+      toolbar: 'undo redo | styleselect | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | code'
+    });
 
     function cargarHTMLBase() {
-      CKEDITOR.instances.editor.setData(htmlBase);
+      tinymce.get('editor').setContent(htmlBase);
     }
 
     function copiarHTML() {
-      var htmlActual = CKEDITOR.instances.editor.getData();
+      var htmlActual = tinymce.get('editor').getContent();
       navigator.clipboard.writeText(htmlActual).then(function() {
         alert('HTML copiado al portapapeles.');
       }, function() {
