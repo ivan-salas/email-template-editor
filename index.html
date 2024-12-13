@@ -4,23 +4,31 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Editor WYSIWYG con TinyMCE</title>
-  <!-- Vincular la hoja de estilos -->
+  
   <link rel="stylesheet" href="styles.css">
+  <!-- Cargar Bootstrap 5 desde CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" 
+        integrity="sha384-ENjdO4Dr2bkBIFxQpeo3sl0nB3I1vyN2TTTBo6zACsa0SDIbD3ZB9T0Q5E67h9ha" crossorigin="anonymous">
+
   <!-- Cargar TinyMCE desde CDN -->
   <script src="https://cdn.jsdelivr.net/npm/tinymce@6/tinymce.min.js" referrerpolicy="origin"></script>
 </head>
-<body>
-  <h1>Editor HTML Interactivo (TinyMCE)</h1>
-  <p>Presiona "Cargar HTML Base" para cargar el template desde un archivo externo. Luego edítalo y presiona "Copiar HTML Actual".</p>
+<body class="container my-4">
+  <h1 class="mb-3">Editor HTML Interactivo (TinyMCE)</h1>
+  <p>Presiona <strong>"Cargar HTML Base"</strong> para cargar el template desde un archivo externo. Luego edítalo y presiona <strong>"Copiar HTML Actual"</strong>.</p>
 
-  <div>
-    <button onclick="cargarHTMLBase()">Cargar HTML Base</button>
-    <button onclick="copiarHTML()">Copiar HTML Actual</button>
+  <div class="mb-3">
+    <button class="btn btn-primary me-2" onclick="cargarHTMLBase()">Cargar HTML Base</button>
+    <button class="btn btn-success" onclick="copiarHTML()">Copiar HTML Actual</button>
   </div>
 
   <textarea id="editor"></textarea>
 
-  <!-- Incluir el script externo al final del body -->
+  <!-- Tu script personalizado -->
   <script src="script.js"></script>
+  <!-- JavaScript de Bootstrap -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" 
+          integrity="sha384-w76A2z2HXfK5t2eB0L+uGZ3rCQTcU6oDHDh5tL09VyL2lcqaaL9Pl+Hx0C3a9c1E" 
+          crossorigin="anonymous"></script>
 </body>
 </html>
