@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Editor HTML TinyMCE</title>
 
   <!-- Google Fonts -->
@@ -11,31 +11,145 @@
   <!-- Bootstrap 5 -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
   <!-- TinyMCE -->
   <script src="https://cdn.jsdelivr.net/npm/tinymce@6/tinymce.min.js"></script>
 
-  <style> body { font-family: 'Inter', sans-serif; } </style>
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <style> 
+    body { font-family: 'Inter', sans-serif; } 
+    #autosaveIndicator {
+      display: flex;
+      align-items: center;
+    }
+    /* Por defecto, gris */
+    #autosaveIndicator i,
+    #autosaveIndicator small {
+      color: gray;
+    }
+  </style>
 </head>
 <body class="bg-light">
   <nav class="navbar navbar-light bg-white shadow-sm mb-4">
-    <div class="container-fluid">
+    <div class="container-fluid d-flex justify-content-between">
       <a class="navbar-brand fw-semibold" href="#">Mi Editor de Plantillas</a>
+      <div class="d-flex align-items-center" id="userInfo">
+        <!-- Usuario y después el indicador -->
+        <div id="autosaveIndicator" class="ms-3">
+          <i class="bi bi-check-circle me-1"></i>
+          <small class="fw-semibold">Auto-guardado</small>
+        </div>
+      </div>
     </div>
   </nav>
 
   <div class="container my-5 py-3">
     <h1 class="mb-4 text-primary">Editor HTML Interactivo (TinyMCE)</h1>
-    <div class="d-flex gap-3 mb-3">
-      <button class="btn btn-primary" onclick="cargarTemplate('Template_Hallazgos_Envis.html')">Cargar Template Hallazgos</button>
-      <button class="btn btn-primary" onclick="cargarTemplate('Template_Invitación_Envis.html')">Cargar Template Invitación</button>
+
+    <!-- Botones para Template -->
+    <div class="mb-3 d-flex gap-2">
+      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#templateModal">
+        <i class="bi bi-folder2-open"></i> Cargar Template
+      </button>
+      <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#projectsModal">
+        <i class="bi bi-folder2-open"></i> Mis Proyectos
+      </button>
+      <button class="btn btn-info" id="saveProjectBtn">
+        <i class="bi bi-save"></i> Guardar Proyecto Actual
+      </button>
     </div>
 
     <div class="card shadow-sm">
       <div class="card-body">
         <textarea id="editor"></textarea>
       </div>
-      <div class="card-footer d-flex justify-content-end">
-        <button class="btn btn-success" onclick="copiarHTML()">Copiar HTML Actual</button>
+      <div class="card-footer d-flex justify-content-end gap-2">
+        <button class="btn btn-success" onclick="copiarHTML()"><i class="bi bi-clipboard-check"></i> Copiar HTML Actual</button>
+        <button class="btn btn-dark" onclick="descargarHTML()"><i class="bi bi-download"></i> Descargar HTML</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal para Templates -->
+  <div class="modal fade" id="templateModal" tabindex="-1" aria-labelledby="templateModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Seleccionar Template</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <p>Elige uno de los templates disponibles:</p>
+          <ul class="list-group">
+            <li class="list-group-item">
+              <a href="#" onclick="cargarTemplate('templates/Template_Hallazgos_Envis.html')" data-bs-dismiss="modal">
+                <i class="bi bi-file-earmark-code"></i> Hallazgos
+              </a>
+            </li>
+            <li class="list-group-item">
+              <a href="#" onclick="cargarTemplate('templates/Template_Invitación_Envis.html')" data-bs-dismiss="modal">
+                <i class="bi bi-file-earmark-code"></i> Invitación
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal para proyectos del usuario -->
+  <div class="modal fade" id="projectsModal" tabindex="-1" aria-labelledby="projectsModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Mis Proyectos Guardados</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <div id="projectsList"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de Login -->
+  <div class="modal fade" id="loginModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Iniciar Sesión</h5>
+        </div>
+        <div class="modal-body">
+          <p>Ingresa un nombre de usuario (solo para identificar y guardar tus proyectos):</p>
+          <input type="text" id="usernameInput" class="form-control" placeholder="Tu nombre de usuario...">
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary" onclick="loginUser()">Iniciar Sesión</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal para ingresar nombre del proyecto -->
+  <div class="modal fade" id="projectNameModal" tabindex="-1" aria-labelledby="projectNameModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="projectNameModalLabel">Guardar Proyecto</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <p>Ingrese un nombre para el proyecto:</p>
+          <input type="text" id="projectNameInput" class="form-control" placeholder="Nombre del proyecto...">
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button class="btn btn-primary" id="saveProjectConfirmBtn">Guardar</button>
+        </div>
       </div>
     </div>
   </div>
@@ -50,7 +164,6 @@
     </div>
   </div>
 
-  <!-- Scripts -->
   <script src="script.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
